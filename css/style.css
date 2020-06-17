@@ -1,0 +1,23 @@
+/* <!-- need a start button
+Thinking i can use object and key pairs for q and a, although I don't like this, not very dry.
+insted of boleans might be able to do a answer question pair insted of a question bolean pair
+Remember to use JSON.stringify() and JSON.parse() to store and retrieve data for local storage
+ --> */
+
+ .cell{
+    background-color: grey;
+    width: 70%;
+    float: left;
+    margin-left: 14%;
+    margin-right: 14%;
+    text-align: center;
+}
+.btn{
+    width: 25%;
+    margin:3%;
+    text-align: center;
+}
+
+.hideBtn {
+    visibility: hidden;
+}
