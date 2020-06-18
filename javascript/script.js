@@ -36,10 +36,15 @@ function next() {
 
 }
 
-var questions = {
+var questions1 = {
     answer : "Hello", 
-    question : "asdf"
+    question1 : "asdf",
+    question2 : "asdf",
+    question3 : "asdf",
 };
+
+
+
 
 
 
