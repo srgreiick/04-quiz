@@ -21,10 +21,28 @@ function startQuiz() {
     confirmBtn.className="btn btn-primary";
     previousBtn.className="btn btn-primary";
     console.log("Start Button Hidden");
+
 }
-function next(params) {
-    
+
+confirmBtn.addEventListener("click", next);
+function next() {
+    alert("next question");
+
 }
+
+previousBtn.addEventListener("click", next);
+function next() {
+    alert("last question");
+
+}
+
+var questions = {
+    answer : "Hello", 
+    question : "asdf"
+};
+
+
+
 
 //Then a question is displayed
 //Then the timer is started
