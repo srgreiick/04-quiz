@@ -12,9 +12,12 @@
 //  -->
 
 //When I press the start button, the start button diapears
-var startBtn = document.getElementById("startbtn");
-var confirmBtn = document.getElementById("confirmBtn");
-var previousBtn = document.getElementById("previousBtn");
+let startBtn = document.getElementById("startbtn");
+let confirmBtn = document.getElementById("confirmBtn");
+let previousBtn = document.getElementById("previousBtn");
+let questionLocation = document.getElementById("question");
+let answerOptions = document.getElementById("answeroptions")
+let whichQuestion = -1;
 startBtn.addEventListener("click", startQuiz);
 function startQuiz() {
     startBtn.className = "hideBtn";
@@ -26,22 +29,40 @@ function startQuiz() {
 
 confirmBtn.addEventListener("click", next);
 function next() {
-    alert("next question");
+    
+    nextQuestion();
 
 }
 
-previousBtn.addEventListener("click", next);
-function next() {
-    alert("last question");
+previousBtn.addEventListener("click", previous);
+function previous() {
+    whichQuestion--
+    if (whichQuestion < 0) {
+        whichQuestion = 0
+    }
+    console.log(whichQuestion)
+    
 
 }
 
-var questions1 = {
+let questions = [{
+    description : "Select 'Hello'",
     answer : "Hello", 
     question1 : "asdf",
     question2 : "asdf",
-    question3 : "asdf",
-};
+    question3 : "Hello",
+}
+
+];
+console.log()
+function nextQuestion() {
+    whichQuestion++
+    console.log(whichQuestion)
+    questionLocation.textContent = questions[whichQuestion].description
+    answerOptions.textContent = questions[whichQuestion].question1
+    answerOptions.textContent = questions[whichQuestion].question3
+    answerOptions.textContent = questions[whichQuestion].question3
+}
 
 
 
