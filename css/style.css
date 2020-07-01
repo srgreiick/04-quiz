@@ -19,6 +19,9 @@ Remember to use JSON.stringify() and JSON.parse() to store and retrieve data for
     
 }
 
+.greyBtn{
+
+}
 .hideBtn {
     visibility: hidden;
 }

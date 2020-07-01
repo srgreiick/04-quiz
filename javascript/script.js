@@ -1,21 +1,8 @@
-var testArray = ['apples', 'bananans', 'pears', 'peaches'];
-var testLength1 = testArray.length;
-var testLength2 = testArray.length -1;
-var testLength3 = (testArray.length) -1;
-console.log(testLength1);
-console.log(testLength2);
-console.log(testLength3);
-//variable to track current question
-let whichQuestion = 0;
-
 //use the speed reader
 //High scores will be stored in local storage
-//
-
 // <!-- need a start button
 // Thinking i can use object and key pairs for q and a, although I don't like this, not very dry.
-// insted of boleans might be able to do a answer question pair insted of a question bolean pair
-// Remember to use JSON.stringify() and JSON.parse() to store and retrieve data for local storage
+// insted of ON.parse() to store and retrieve data for local storage
 
 //  -->
 
@@ -24,7 +11,8 @@ let startBtn = document.getElementById("startbtn");
 let confirmBtn = document.getElementById("confirmBtn");
 let previousBtn = document.getElementById("previousBtn");
 let questionLocation = document.getElementById("questionLocation");
-
+//variable to track current question
+let whichQuestion = 0;
 
 startBtn.addEventListener("click", startQuiz);
 
@@ -87,6 +75,11 @@ function next() {
     whichQuestion++
     if (whichQuestion >= questions.length) {
         whichQuestion = (questions.length) -1;
+        confirmBtn.textContent = "Finish"
+    }
+    else {
+        confirmBtn.textContent = "Confirm"
+        previousBtn.className="btn btn-primary";
     };
     nextQuestion();
     console.log("%cCurrent question " +whichQuestion, "color:red")
@@ -119,7 +112,12 @@ function previous() {
    
     whichQuestion--;
     if (whichQuestion < 0) {
-        whichQuestion = 0
+        whichQuestion = 0;
+        confirmBtn.textContent = "Confirm";
+        previousBtn.className="greyBtn";
+    }
+    else{
+        confirmBtn.textContent = "Confirm"
     };
     previousAction()
     console.log("%cCurrent question " +whichQuestion, "color:red")
