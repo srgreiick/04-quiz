@@ -16,8 +16,16 @@ Remember to use JSON.stringify() and JSON.parse() to store and retrieve data for
     width: 25%;
     margin:3%;
     text-align: center;
+    
 }
 
 .hideBtn {
     visibility: hidden;
+}
+
+.answerBtn{
+    margin-right: 7%;
+    margin-right: 7%;
+    padding: 4%;
+    width: 30%;
 }

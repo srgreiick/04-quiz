@@ -1,4 +1,10 @@
-
+var testArray = ['apples', 'bananans', 'pears', 'peaches'];
+var testLength1 = testArray.length;
+var testLength2 = testArray.length -1;
+var testLength3 = (testArray.length) -1;
+console.log(testLength1);
+console.log(testLength2);
+console.log(testLength3);
 
 //use the speed reader
 //High scores will be stored in local storage
@@ -46,14 +52,25 @@ let questions = [{
     ]
 },
 {
-    description : "Select 'Hello'",
-    answer : "Hello",
+    description : "Select 'yes'",
+    answer : "yes",
     answers :
     [
     "asdasdffff",
     "asasdfffdf",
     "Hello",
     "asdfasdfafsdfasdfadsfadsff"
+    ]
+},
+{
+    description : "Select 'no'",
+    answer : "no",
+    answers :
+    [
+    "asdasdffff",
+    "lolololo",
+    "Hello",
+    "amymyfadsff"
     ]
 }
 ];
@@ -67,7 +84,7 @@ console.log("Current question " +whichQuestion)
 
 console.log()
 function nextQuestion() {
-    //Sets the which question variable and sets safty
+    
     
 
     console.log("%cCurrent question " +whichQuestion, "color:red")
@@ -81,14 +98,16 @@ function nextQuestion() {
         console.log(answerOptions.textContent);
         questionLocation.appendChild(answerOptions);
     };
+    //Sets the which question variable and sets safty
     whichQuestion++
-    if (whichQuestion > questions.length) {
-        whichQuestion = questions.length -2;
+    if (whichQuestion >= questions.length) {
+        whichQuestion = (questions.length) -1;
     };
+    console.log("%cCurrent question " +whichQuestion, "color:red")
 };
 
 
-
+//
 previousBtn.addEventListener("click", previous);
 function previous() {
     console.log("Previous clicked")
@@ -98,6 +117,8 @@ function previous() {
     };
     console.log(whichQuestion);
     nextQuestion();
+    whichQuestion--;
+    console.log("%cCurrent question " +whichQuestion, "color:red")
 };
 
 
