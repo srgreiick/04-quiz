@@ -5,6 +5,8 @@ var testLength3 = (testArray.length) -1;
 console.log(testLength1);
 console.log(testLength2);
 console.log(testLength3);
+//variable to track current question
+let whichQuestion = 0;
 
 //use the speed reader
 //High scores will be stored in local storage
@@ -35,8 +37,7 @@ function startQuiz() {
     nextQuestion();
 
 }
-//Actions tied to the Confirm button
-confirmBtn.addEventListener("click", nextQuestion);
+
 
 
 //Array of objects that will serve as questions for the test
@@ -74,22 +75,29 @@ let questions = [{
     ]
 }
 ];
-//variable to track current question
-let whichQuestion = 0;
 
 //console.log("number of answers in current question "+questions[whichQuestion].answers.length)
 console.log("NUmber questions "+questions.length)
 console.log("Current question " +whichQuestion)
 //console.log("number of answers in current question "+ JSON.stringify(questions[whichQuestion].answers))
+//Actions tied to the Confirm button
+confirmBtn.addEventListener("click", next);
+function next() {
+    console.log("%cCurrent question " +whichQuestion, "color:red")
+    whichQuestion++
+    if (whichQuestion >= questions.length) {
+        whichQuestion = (questions.length) -1;
+    };
+    nextQuestion();
+    console.log("%cCurrent question " +whichQuestion, "color:red")
 
-console.log()
+}
+
 function nextQuestion() {
-    
-    
-
     console.log("%cCurrent question " +whichQuestion, "color:red")
     $(".answerBtn").remove();
-//For loop that iterates through questions and creates a new button for each one
+
+    //For loop that iterates through questions and creates a new button for each one
     for (let i = 0; i < questions[whichQuestion].answers.length; i++) {
         console.log(questions[whichQuestion].answers[i]);
         let answerOptions = document.createElement("a");
@@ -99,26 +107,30 @@ function nextQuestion() {
         questionLocation.appendChild(answerOptions);
     };
     //Sets the which question variable and sets safty
-    whichQuestion++
-    if (whichQuestion >= questions.length) {
-        whichQuestion = (questions.length) -1;
-    };
+
     console.log("%cCurrent question " +whichQuestion, "color:red")
 };
 
 
-//
+//Actions tied to the previous button
 previousBtn.addEventListener("click", previous);
 function previous() {
-    console.log("Previous clicked")
+    console.log("%cCurrent question " +whichQuestion, "color:red")
+   
     whichQuestion--;
     if (whichQuestion < 0) {
         whichQuestion = 0
     };
-    console.log(whichQuestion);
-    nextQuestion();
-    whichQuestion--;
+    previousAction()
     console.log("%cCurrent question " +whichQuestion, "color:red")
+}
+
+function previousAction() {
+    console.log("Current question " +whichQuestion)
+    console.log("Previous clicked")
+    console.log("%cCurrent question " +whichQuestion, "color:red");
+    nextQuestion();
+    console.log("%cCurrent question " +whichQuestion, "color:red");
 };
 
 
