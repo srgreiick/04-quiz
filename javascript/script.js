@@ -15,55 +15,90 @@
 let startBtn = document.getElementById("startbtn");
 let confirmBtn = document.getElementById("confirmBtn");
 let previousBtn = document.getElementById("previousBtn");
-let questionLocation = document.getElementById("question");
-let answerOptions = document.getElementById("answeroptions")
-let whichQuestion = -1;
+let questionLocation = document.getElementById("questionLocation");
+
+
 startBtn.addEventListener("click", startQuiz);
+
+//starts quze and hides/shows relevent buttons
 function startQuiz() {
-    startBtn.className = "hideBtn";
+    startBtn.className ="hideBtn";
     confirmBtn.className="btn btn-primary";
     previousBtn.className="btn btn-primary";
     console.log("Start Button Hidden");
-
-}
-
-confirmBtn.addEventListener("click", next);
-function next() {
-    
     nextQuestion();
 
 }
+//Actions tied to the Confirm button
+confirmBtn.addEventListener("click", nextQuestion);
+
+
+//Array of objects that will serve as questions for the test
+let questions = [{
+    description : "Select 'Hello'",
+    answer : "Hello",
+    answers :
+    [
+    "asdf",
+    "asdf",
+    "Hello",
+    "asdfff"
+    ]
+},
+{
+    description : "Select 'Hello'",
+    answer : "Hello",
+    answers :
+    [
+    "asdasdffff",
+    "asasdfffdf",
+    "Hello",
+    "asdfasdfafsdfasdfadsfadsff"
+    ]
+}
+];
+//variable to track current question
+let whichQuestion = 0;
+
+//console.log("number of answers in current question "+questions[whichQuestion].answers.length)
+console.log("NUmber questions "+questions.length)
+console.log("Current question " +whichQuestion)
+//console.log("number of answers in current question "+ JSON.stringify(questions[whichQuestion].answers))
+
+console.log()
+function nextQuestion() {
+    //Sets the which question variable and sets safty
+    
+
+    console.log("%cCurrent question " +whichQuestion, "color:red")
+    $(".answerBtn").remove();
+//For loop that iterates through questions and creates a new button for each one
+    for (let i = 0; i < questions[whichQuestion].answers.length; i++) {
+        console.log(questions[whichQuestion].answers[i]);
+        let answerOptions = document.createElement("a");
+        answerOptions.className = "btn btn-primary answerBtn";
+        answerOptions.textContent = JSON.stringify(questions[whichQuestion].answers[i]);
+        console.log(answerOptions.textContent);
+        questionLocation.appendChild(answerOptions);
+    };
+    whichQuestion++
+    if (whichQuestion > questions.length) {
+        whichQuestion = questions.length 
+    };
+};
+
+
 
 previousBtn.addEventListener("click", previous);
 function previous() {
-    whichQuestion--
+    console.log("Previous clicked")
+    whichQuestion--;
     if (whichQuestion < 0) {
         whichQuestion = 0
-    }
-    console.log(whichQuestion)
-    
-
-}
-
-let questions = [{
-    description : "Select 'Hello'",
-    answer : "Hello", 
-    question1 : "asdf",
-    question2 : "asdf",
-    question3 : "Hello",
-}
-
-];
-console.log()
-function nextQuestion() {
-    whichQuestion++
-    console.log(whichQuestion)
-    questionLocation.textContent = questions[whichQuestion].description
-    answerOptions.textContent = questions[whichQuestion].question1
-    answerOptions.textContent = questions[whichQuestion].question3
-    answerOptions.textContent = questions[whichQuestion].question3
-}
-
+    };
+    console.log(whichQuestion);
+    nextQuestion();
+};
 
 
 
