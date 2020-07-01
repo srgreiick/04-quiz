@@ -83,7 +83,7 @@ function nextQuestion() {
     };
     whichQuestion++
     if (whichQuestion > questions.length) {
-        whichQuestion = questions.length 
+        whichQuestion = questions.length -2;
     };
 };
 
