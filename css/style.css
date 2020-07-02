@@ -12,6 +12,7 @@ Remember to use JSON.stringify() and JSON.parse() to store and retrieve data for
     margin-right: 14%;
     text-align: center;
 }
+
 .btn{
     width: 25%;
     margin:3%;
@@ -22,6 +23,7 @@ Remember to use JSON.stringify() and JSON.parse() to store and retrieve data for
 .greyBtn{
 
 }
+
 .hideBtn {
     visibility: hidden;
 }

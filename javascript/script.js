@@ -101,7 +101,7 @@ function nextQuestion() {
     };
     //Sets the which question variable and sets safty
 
-    console.log("%cCurrent question " +whichQuestion, "color:red")
+    console.log("%cCurrent question " +whichQuestion, "color:red");
 };
 
 
@@ -121,7 +121,7 @@ function previous() {
     };
     previousAction()
     console.log("%cCurrent question " +whichQuestion, "color:red")
-}
+}; 
 
 function previousAction() {
     console.log("Current question " +whichQuestion)
