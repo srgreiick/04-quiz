@@ -11,6 +11,10 @@ let startBtn = document.getElementById("startbtn");
 let confirmBtn = document.getElementById("confirmBtn");
 let previousBtn = document.getElementById("previousBtn");
 let questionLocation = document.getElementById("questionLocation");
+let questionDescription = document.getElementById("question")
+let answerOptions = ""
+let selectedAnswer = ""
+
 //variable to track current question
 let whichQuestion = 0;
 
@@ -25,7 +29,6 @@ function startQuiz() {
     nextQuestion();
 
 }
-
 
 
 //Array of objects that will serve as questions for the test
@@ -68,10 +71,13 @@ let questions = [{
 console.log("NUmber questions "+questions.length)
 console.log("Current question " +whichQuestion)
 //console.log("number of answers in current question "+ JSON.stringify(questions[whichQuestion].answers))
+
 //Actions tied to the Confirm button
 confirmBtn.addEventListener("click", next);
+
+
 function next() {
-    console.log("%cCurrent question " +whichQuestion, "color:red")
+    console.log("%cCurrent question " +whichQuestion, "color:red");
     whichQuestion++
     if (whichQuestion >= questions.length) {
         whichQuestion = (questions.length) -1;
@@ -81,28 +87,49 @@ function next() {
         confirmBtn.textContent = "Confirm"
         previousBtn.className="btn btn-primary";
     };
-    nextQuestion();
-    console.log("%cCurrent question " +whichQuestion, "color:red")
 
+
+    nextQuestion();
+    console.log("%cCurrent question " +whichQuestion, "color:red");
 }
 
-function nextQuestion() {
-    console.log("%cCurrent question " +whichQuestion, "color:red")
-    $(".answerBtn").remove();
 
-    //For loop that iterates through questions and creates a new button for each one
+
+
+
+
+
+
+
+
+function nextQuestion() {
+    console.log("%cCurrent question " +whichQuestion, "color:red");
+    $(".answerBtn").remove();
+    questionDescription.textContent = questions[whichQuestion].description
+
+    //For loop that iterates through questions array and creates a new button for each one
     for (let i = 0; i < questions[whichQuestion].answers.length; i++) {
         console.log(questions[whichQuestion].answers[i]);
         let answerOptions = document.createElement("a");
         answerOptions.className = "btn btn-primary answerBtn";
+        answerOptions.id = "answer "+i;
         answerOptions.textContent = JSON.stringify(questions[whichQuestion].answers[i]);
         console.log(answerOptions.textContent);
         questionLocation.appendChild(answerOptions);
-    };
-    //Sets the which question variable and sets safty
-
-    console.log("%cCurrent question " +whichQuestion, "color:red");
+    }
+    questionLocation.addEventListener
 };
+
+//Actions tied to the specific answer buttons
+document.getElementById("questionLocation").addEventListener("click", function(e) {
+    console.log(e.currentTarget);  //<ul><li>...</li><ul>
+    console.log(e.target);         //<a href="#">Item 2</a>
+
+    let selectedAnswer = e.target.textContent
+    console.log(selectedAnswer)
+    console.log(questions[whichQuestion].answer)
+
+});
 
 
 //Actions tied to the previous button
@@ -114,7 +141,7 @@ function previous() {
     if (whichQuestion < 0) {
         whichQuestion = 0;
         confirmBtn.textContent = "Confirm";
-        previousBtn.className="greyBtn";
+        previousBtn.className="hideBtn";
     }
     else{
         confirmBtn.textContent = "Confirm"
@@ -130,6 +157,13 @@ function previousAction() {
     nextQuestion();
     console.log("%cCurrent question " +whichQuestion, "color:red");
 };
+
+
+
+
+
+
+
 
 
 
