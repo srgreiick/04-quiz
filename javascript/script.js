@@ -41,7 +41,8 @@ let questions = [{
     "asdf",
     "Hello",
     "asdfff"
-    ]
+    ],
+    picked: ""
 },
 {
     description : "Select 'yes'",
@@ -52,7 +53,8 @@ let questions = [{
     "asasdfffdf",
     "Hello",
     "asdfasdfafsdfasdfadsfadsff"
-    ]
+    ],
+    picked: ""
 },
 {
     description : "Select 'no'",
@@ -63,7 +65,8 @@ let questions = [{
     "lolololo",
     "Hello",
     "amymyfadsff"
-    ]
+    ],
+    picked: ""
 }
 ];
 
@@ -87,7 +90,7 @@ function next() {
         confirmBtn.textContent = "Confirm"
         previousBtn.className="btn btn-primary";
     };
-
+    selectedAnswer = 
 
     nextQuestion();
     console.log("%cCurrent question " +whichQuestion, "color:red");
@@ -117,7 +120,11 @@ function nextQuestion() {
         console.log(answerOptions.textContent);
         questionLocation.appendChild(answerOptions);
     }
-    questionLocation.addEventListener
+    questionLocation.addEventListener('click',(e)=>{
+        selectedAnswer = e.target.textContent
+        questions[whichQuestion].picked = selectedAnswer
+        console.log(questions[whichQuestion].picked + " picked")
+    })
 };
 
 //Actions tied to the specific answer buttons
@@ -135,7 +142,7 @@ document.getElementById("questionLocation").addEventListener("click", function(e
 //Actions tied to the previous button
 previousBtn.addEventListener("click", previous);
 function previous() {
-    console.log("%cCurrent question " +whichQuestion, "color:red")
+    console.log("%Current question " +whichQuestion, "color:red")
    
     whichQuestion--;
     if (whichQuestion < 0) {
@@ -157,6 +164,7 @@ function previousAction() {
     nextQuestion();
     console.log("%cCurrent question " +whichQuestion, "color:red");
 };
+
 
 
 
