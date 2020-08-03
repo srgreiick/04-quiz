@@ -10,6 +10,7 @@ let confirmBtn = document.getElementById("confirmBtn");
 let previousBtn = document.getElementById("previousBtn");
 let questionLocation = document.getElementById("questionLocation");
 let questionDescription = document.getElementById("question")
+let cell = document.getElementById("cell")
 let answerOptions = ""
 let selectedAnswer = ""
 
@@ -26,6 +27,7 @@ function startQuiz() {
     previousBtn.className = "btn btn-primary";
     console.log("Start Button Hidden");
     renderQuestion();
+    setTime();
 
 }
 
@@ -69,6 +71,24 @@ let questions = [{
 }
 ];
 
+//timer setup that gives you a total time based 
+//on the number of questions in the questions object
+let secondsLeft = (questions.length *10);
+function setTime() {
+  let timerInterval = setInterval(function() {
+    secondsLeft--;
+    console.log(secondsLeft);
+
+    if(secondsLeft === 0) {
+      clearInterval(timerInterval);
+      grade();
+      return;
+    }
+
+  }, 1000);
+}
+
+
 //Actions tied to the Confirm button
 confirmBtn.addEventListener("click", next);
 
@@ -86,6 +106,7 @@ function next() {
     if (whichQuestion >= questions.length) {
         whichQuestion = (questions.length) - 1;
         confirmBtn.textContent = "Finish"
+        questionDescription.textContent = "Select "
     }
     else {
         confirmBtn.textContent = "Confirm"
@@ -143,10 +164,13 @@ function grade() {
             console.log("ya missed")
         }
         console.log(questions[i].picked + questions[i].answer)
-    }
-
+    } 
     console.log("You got " + score + "/" + questions.length)
-    score = 0
+    
+    questionLocation.remove()
+    previousBtn.remove()
+    confirmBtn.remove()
 
+    questionDescription.textContent = "You got " + score + "/" + questions.length
 }
 

@@ -6,7 +6,7 @@ Remember to use JSON.stringify() and JSON.parse() to store and retrieve data for
 
  .cell{
     background-color: grey;
-    width: 70%;
+    width: 100%;
     float: left;
     margin-left: 14%;
     margin-right: 14%;
@@ -17,7 +17,7 @@ Remember to use JSON.stringify() and JSON.parse() to store and retrieve data for
     width: 25%;
     margin:3%;
     text-align: center;
-    
+      
 }
 
 
@@ -33,10 +33,10 @@ Remember to use JSON.stringify() and JSON.parse() to store and retrieve data for
     width: 30%;
 }
 
-.correct{
-    background-color: green;
+.startBtn{
+    float: left;
 }
 
-.wrong{
+.questionLocation{
     background-color: red;
 }
