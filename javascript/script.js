@@ -5,7 +5,6 @@
 // insted of ON.parse() to store and retrieve data for local storage
 //  -->
 
-//When I press the start button, the start button diapears
 let startBtn = document.getElementById("startbtn");
 let confirmBtn = document.getElementById("confirmBtn");
 let previousBtn = document.getElementById("previousBtn");
@@ -16,17 +15,17 @@ let selectedAnswer = ""
 
 //variable to track current question
 let whichQuestion = 0;
+//variable to track score for grading
 let score = 0;
 
 startBtn.addEventListener("click", startQuiz);
-
 //starts quiz and hides/shows relevant buttons
 function startQuiz() {
     startBtn.className = "hideBtn";
     confirmBtn.className = "btn btn-primary";
     previousBtn.className = "btn btn-primary";
     console.log("Start Button Hidden");
-    nextQuestion();
+    renderQuestion();
 
 }
 
@@ -75,7 +74,6 @@ confirmBtn.addEventListener("click", next);
 
 //Checks if quiz is over based on text content of confirm button
 //Increments whichQuestion variable
-
 function next() {
     if (confirmBtn.textContent === "Finish") {
         console.log("QUiz OVA");
@@ -93,19 +91,12 @@ function next() {
         confirmBtn.textContent = "Confirm"
         previousBtn.className = "btn btn-primary";
     };
-    nextQuestion();
+    renderQuestion();
 }
 
-
-
-
-
-
-
-
-
-
-function nextQuestion() {
+//function to render questions with text content from "questions" object
+function renderQuestion() {
+    //clears any currently shown answer options before rendering new ones
     $(".answerBtn").remove();
     questionDescription.textContent = questions[whichQuestion].description
 
@@ -117,35 +108,20 @@ function nextQuestion() {
         answerOptions.textContent = questions[whichQuestion].answers[i];
         questionLocation.appendChild(answerOptions);
     }
-
+    //event listener that stores selected answer in the question object for grading later
     questionLocation.addEventListener('click', (e) => {
         selectedAnswer = e.target.textContent
         questions[whichQuestion].picked = selectedAnswer
         console.log(questions[whichQuestion].picked + " picked")
     })
-    for (let i = 0; i < questions.length; i++) {
-        console.log(questions[i].picked)
-    }
 };
-
-//Actions tied to the specific answer buttons
-document.getElementById("questionLocation").addEventListener("click", function (e) {
-    console.log(e.currentTarget);  //<ul><li>...</li><ul>
-    console.log(e.target);         //<a href="#">Item 2</a>
-
-    let selectedAnswer = e.target.textContent
-    console.log(selectedAnswer)
-    console.log(questions[whichQuestion].answer)
-
-});
-
 
 //Actions tied to the previous button
 previousBtn.addEventListener("click", previous);
 function previous() {
-    console.log("%Current question " + whichQuestion, "color:red")
 
     whichQuestion--;
+    //if "whichQuestion" drops below 0 the previous button is hidden
     if (whichQuestion < 0) {
         whichQuestion = 0;
         confirmBtn.textContent = "Confirm";
@@ -154,12 +130,7 @@ function previous() {
     else {
         confirmBtn.textContent = "Confirm"
     };
-    previousAction()
-    console.log("%cCurrent question " + whichQuestion, "color:red")
-};
-
-function previousAction() {
-    nextQuestion();
+    renderQuestion();
 };
 
 
@@ -174,22 +145,8 @@ function grade() {
         console.log(questions[i].picked + questions[i].answer)
     }
 
-
-
-
     console.log("You got " + score + "/" + questions.length)
+    score = 0
 
 }
 
-
-
-
-
-
-
-
-
-
-//Then a question is displayed
-//Then the timer is started
-// 
