@@ -11,8 +11,11 @@ let previousBtn = document.getElementById("previousBtn");
 let questionLocation = document.getElementById("questionLocation");
 let questionDescription = document.getElementById("question")
 let cell = document.getElementById("cell")
+let timer = document.getElementById("timer")
 let answerOptions = ""
 let selectedAnswer = ""
+let finalDiv = document.createElement("a");
+finalDiv.textContent = "Quiz over! Thanks you.";
 
 //variable to track current question
 let whichQuestion = 0;
@@ -73,14 +76,16 @@ let questions = [{
 
 //timer setup that gives you a total time based 
 //on the number of questions in the questions object
-let secondsLeft = (questions.length *10);
+let secondsLeft = (questions.length *5);
+let timerInterval;
 function setTime() {
   let timerInterval = setInterval(function() {
     secondsLeft--;
     console.log(secondsLeft);
+    timer.textContent = secondsLeft + " seconds remaining."
 
     if(secondsLeft === 0) {
-      clearInterval(timerInterval);
+      clearInterval(timerInterval)
       grade();
       return;
     }
@@ -154,8 +159,12 @@ function previous() {
     renderQuestion();
 };
 
-
+//grades the quiz, clears questions and displays your score
 function grade() {
+    timer.remove()
+    
+    questions.appendChild(finalDiv);
+
     for (let i = 0; i < questions.length; i++) {
         if (questions[i].answer == questions[i].picked) {
             score++
@@ -172,5 +181,6 @@ function grade() {
     confirmBtn.remove()
 
     questionDescription.textContent = "You got " + score + "/" + questions.length
+    score = 0;
 }
 
