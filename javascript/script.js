@@ -1,13 +1,6 @@
-//use the speed reader
-//High scores will be stored in local storage
-// <!-- need a start button
-// Thinking i can use object and key pairs for q and a, although I don't like this, not very dry.
-// insted of ON.parse() to store and retrieve data for local storage
-//  -->
 
+//======================= Variables and setup =====================
 let startBtn = document.getElementById("startbtn");
-let confirmBtn = document.getElementById("confirmBtn");
-let previousBtn = document.getElementById("previousBtn");
 let questionLocation = document.getElementById("questionLocation");
 let questionDescription = document.getElementById("question")
 let cell = document.getElementById("cell")
@@ -16,25 +9,10 @@ let answerOptions = ""
 let selectedAnswer = ""
 let finalDiv = document.createElement("a");
 finalDiv.textContent = "Quiz over! Thanks you.";
-
 //variable to track current question
 let whichQuestion = 0;
 //variable to track score for grading
 let score = 0;
-
-startBtn.addEventListener("click", startQuiz);
-//starts quiz and hides/shows relevant buttons
-function startQuiz() {
-    startBtn.className = "hideBtn";
-    confirmBtn.className = "btn btn-primary";
-    previousBtn.className = "btn btn-primary";
-    console.log("Start Button Hidden");
-    renderQuestion();
-    setTime();
-
-}
-
-
 //Array of objects that will serve as questions for the test
 let questions = [{
     description: "Select 'Hello'",
@@ -53,7 +31,7 @@ let questions = [{
     answer: "yes",
     answers:
         [
-            "asdasdffff",
+            "yes",
             "asasdfffdf",
             "Hello",
             "asdfasdfafsdfasdfadsfadsff"
@@ -73,58 +51,79 @@ let questions = [{
     picked: ""
 }
 ];
+//====================== Processes and Functions ======================================
 
 //timer setup that gives you a total time based 
 //on the number of questions in the questions object
+
 let secondsLeft = (questions.length *5);
-let timerInterval;
-function setTime() {
-  let timerInterval = setInterval(function() {
+console.log(secondsLeft)
+timer.textContent = "You will have "+ secondsLeft +" seconds to complete this test."
+let myVar;
+
+//event listener that stores selected answer in the question object and subtracts time from the timer
+questionLocation.addEventListener('click', (e) => {
+    if (whichQuestion >= questions.length -1) {
+        grade()
+        return
+    }
+    selectedAnswer = e.target.textContent
+    questions[whichQuestion].picked = selectedAnswer
+    console.log(questions[whichQuestion].picked + " picked")
+    
+    if (questions[whichQuestion].answer == questions[whichQuestion].picked) {
+        score++
+    }
+    else {
+        console.log("ya missed")
+        secondsLeft-(100);
+    }
+    
+
+    whichQuestion++
+    renderQuestion();
+})
+
+let myTimer = function() {
     secondsLeft--;
     console.log(secondsLeft);
     timer.textContent = secondsLeft + " seconds remaining."
 
     if(secondsLeft === 0) {
-      clearInterval(timerInterval)
       grade();
       return;
     }
-
-  }, 1000);
+};
+let startTimer = function () {
+    myVar = setInterval(myTimer, 1000);
 }
 
 
-//Actions tied to the Confirm button
-confirmBtn.addEventListener("click", next);
 
-//Checks if quiz is over based on text content of confirm button
-//Increments whichQuestion variable
-function next() {
-    if (confirmBtn.textContent === "Finish") {
-        console.log("QUiz OVA");
-        grade();
-        return
-    }
+//grades the quiz, clears questions and displays your score
+function grade() {
+    clearInterval(myVar)
+    timer.remove()
+    questionDescription.appendChild(finalDiv);
 
-    whichQuestion++
+    for (let i = 0; i < questions.length; i++) {
+        console.log(questions[i].picked + questions[i].answer)
+    } 
+    console.log("You got " + score + "/" + questions.length)
+    
+    questionLocation.remove()
 
-    if (whichQuestion >= questions.length) {
-        whichQuestion = (questions.length) - 1;
-        confirmBtn.textContent = "Finish"
-        questionDescription.textContent = "Select "
-    }
-    else {
-        confirmBtn.textContent = "Confirm"
-        previousBtn.className = "btn btn-primary";
-    };
-    renderQuestion();
+    questionDescription.textContent = "You got " + score + "/" + questions.length
 }
+
+
 
 //function to render questions with text content from "questions" object
 function renderQuestion() {
     //clears any currently shown answer options before rendering new ones
     $(".answerBtn").remove();
-    questionDescription.textContent = questions[whichQuestion].description
+
+    console.log(questionDescription.textContent = questions[whichQuestion].description)
 
     //For loop that iterates through questions array and creates a new button for each one
     for (let i = 0; i < questions[whichQuestion].answers.length; i++) {
@@ -134,53 +133,17 @@ function renderQuestion() {
         answerOptions.textContent = questions[whichQuestion].answers[i];
         questionLocation.appendChild(answerOptions);
     }
-    //event listener that stores selected answer in the question object for grading later
-    questionLocation.addEventListener('click', (e) => {
-        selectedAnswer = e.target.textContent
-        questions[whichQuestion].picked = selectedAnswer
-        console.log(questions[whichQuestion].picked + " picked")
-    })
 };
 
-//Actions tied to the previous button
-previousBtn.addEventListener("click", previous);
-function previous() {
 
-    whichQuestion--;
-    //if "whichQuestion" drops below 0 the previous button is hidden
-    if (whichQuestion < 0) {
-        whichQuestion = 0;
-        confirmBtn.textContent = "Confirm";
-        previousBtn.className = "hideBtn";
-    }
-    else {
-        confirmBtn.textContent = "Confirm"
-    };
+
+
+
+//starts quiz and hides/shows relevant buttons
+startBtn.addEventListener("click", startQuiz);
+function startQuiz() {
+    startBtn.className = "hideBtn";
+    console.log("Start Button Hidden");
     renderQuestion();
-};
-
-//grades the quiz, clears questions and displays your score
-function grade() {
-    timer.remove()
-    
-    questions.appendChild(finalDiv);
-
-    for (let i = 0; i < questions.length; i++) {
-        if (questions[i].answer == questions[i].picked) {
-            score++
-        }
-        else {
-            console.log("ya missed")
-        }
-        console.log(questions[i].picked + questions[i].answer)
-    } 
-    console.log("You got " + score + "/" + questions.length)
-    
-    questionLocation.remove()
-    previousBtn.remove()
-    confirmBtn.remove()
-
-    questionDescription.textContent = "You got " + score + "/" + questions.length
-    score = 0;
+    startTimer();
 }
-
