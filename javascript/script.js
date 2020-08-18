@@ -27,26 +27,26 @@ let questions = [{
     picked: ""
 },
 {
-    description: "Select 'yes'",
-    answer: "yes",
+    description: "Which of the following defines a function?",
+    answer: "function doTheThing(){}",
     answers:
         [
-            "yes",
-            "asasdfffdf",
-            "Hello",
-            "asdfasdfafsdfasdfadsfadsff"
+            "function doTheThing(){}",
+            "doTheThing<>",
+            "funct.doTheThing()",
+            "doTheThing()"
         ],
     picked: ""
 },
 {
-    description: "Select 'no'",
-    answer: "no",
+    description: "Which of the following prints 'Hello' to the console ",
+    answer: "1",
     answers:
         [
-            "asdasdffff",
-            "lolololo",
-            "Hello",
-            "amymyfadsff"
+            "1",
+            "log-'Hello'",
+            "consoleSay 'Hello'",
+            "None of the above"
         ],
     picked: ""
 }
@@ -59,16 +59,13 @@ let questions = [{
 
 let secondsLeft = (questions.length * 5);
 console.log(secondsLeft)
-timer.textContent = "You will have " + secondsLeft + " seconds to complete this test."
+timer.textContent = "You will have " + secondsLeft + " seconds to complete this test. Incorrect answerers will reduce time"
 let myVar;
 
 
 //event listener and connected function that stores selected answer in the question object and subtracts time from the timer
 questionLocation.addEventListener('click', (e) => {
-    if (whichQuestion >= questions.length - 1) {
-        grade()
-        return
-    }
+ 
     selectedAnswer = e.target.textContent
     questions[whichQuestion].picked = selectedAnswer
     console.log(questions[whichQuestion].picked + " picked")
@@ -78,11 +75,13 @@ questionLocation.addEventListener('click', (e) => {
     }
     else {
         console.log("ya missed")
-        console.log(secondsLeft);
         secondsLeft -=5;
     }
 
-
+    if (whichQuestion >= questions.length - 1) {
+        grade()
+        return
+    }
     whichQuestion++
     renderQuestion();
 })
@@ -92,7 +91,7 @@ let myTimer = function () {
     console.log(secondsLeft);
     timer.textContent = secondsLeft + " seconds remaining."
 
-    if (secondsLeft === 0) {
+    if (secondsLeft < 0) {
         grade();
         return;
     }
@@ -110,10 +109,6 @@ function grade() {
     clearInterval(myVar)
     timer.remove()
     questionDescription.appendChild(finalDiv);
-
-    for (let i = 0; i < questions.length; i++) {
-        console.log(questions[i].picked + questions[i].answer)
-    }
     console.log("You got " + score + "/" + questions.length)
 
     questionLocation.remove()
