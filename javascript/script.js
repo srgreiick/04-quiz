@@ -15,14 +15,14 @@ let whichQuestion = 0;
 let score = 0;
 //Array of objects that will serve as questions for the test
 let questions = [{
-    description: "Select 'Hello'",
-    answer: "Hello",
+    description: "What data type os this? True",
+    answer: "Boolean",
     answers:
         [
-            "asdf",
-            "asdf",
-            "Hello",
-            "asdfff"
+            "Boolean",
+            "String",
+            "Integer",
+            "Statement"
         ],
     picked: ""
 },
@@ -56,44 +56,49 @@ let questions = [{
 //timer setup that gives you a total time based 
 //on the number of questions in the questions object
 
-let secondsLeft = (questions.length *5);
+
+let secondsLeft = (questions.length * 5);
 console.log(secondsLeft)
-timer.textContent = "You will have "+ secondsLeft +" seconds to complete this test."
+timer.textContent = "You will have " + secondsLeft + " seconds to complete this test."
 let myVar;
 
-//event listener that stores selected answer in the question object and subtracts time from the timer
+
+//event listener and connected function that stores selected answer in the question object and subtracts time from the timer
 questionLocation.addEventListener('click', (e) => {
-    if (whichQuestion >= questions.length -1) {
+    if (whichQuestion >= questions.length - 1) {
         grade()
         return
     }
     selectedAnswer = e.target.textContent
     questions[whichQuestion].picked = selectedAnswer
     console.log(questions[whichQuestion].picked + " picked")
-    
+
     if (questions[whichQuestion].answer == questions[whichQuestion].picked) {
         score++
     }
     else {
         console.log("ya missed")
-        secondsLeft-(100);
+        console.log(secondsLeft);
+        secondsLeft -=5;
     }
-    
+
 
     whichQuestion++
     renderQuestion();
 })
 
-let myTimer = function() {
+let myTimer = function () {
     secondsLeft--;
     console.log(secondsLeft);
     timer.textContent = secondsLeft + " seconds remaining."
 
-    if(secondsLeft === 0) {
-      grade();
-      return;
+    if (secondsLeft === 0) {
+        grade();
+        return;
     }
 };
+
+
 let startTimer = function () {
     myVar = setInterval(myTimer, 1000);
 }
@@ -108,9 +113,9 @@ function grade() {
 
     for (let i = 0; i < questions.length; i++) {
         console.log(questions[i].picked + questions[i].answer)
-    } 
+    }
     console.log("You got " + score + "/" + questions.length)
-    
+
     questionLocation.remove()
 
     questionDescription.textContent = "You got " + score + "/" + questions.length
@@ -147,3 +152,6 @@ function startQuiz() {
     renderQuestion();
     startTimer();
 }
+
+
+
